@@ -22,8 +22,8 @@ export default function RootLayout({
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
-            enableSystem={false}
-            disableTransitionOnChange
+            // enableSystem={false}
+            // disableTransitionOnChange
           >
             <AuthProvider>
               <Nav />

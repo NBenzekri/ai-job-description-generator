@@ -12,9 +12,13 @@ export async function POST(req: Request) {
 
   const { prompt } = await req.json();
 
+  const maxTokens = process.env.MAX_TOKENS
+    ? parseInt(process.env.MAX_TOKENS)
+    : 512;
+
   const result = await streamText({
     model: openai(process.env.OPENAI_MODEL),
-    maxTokens: parseInt(process.env.MAX_TOKENS) || 512,
+    maxTokens,
     system: `You are a professional HR assistant specialized in creating job descriptions. 
     Reply only with the job description in the specified language. 
     If no language is specified, reply in English.

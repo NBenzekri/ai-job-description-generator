@@ -6,7 +6,7 @@ export async function fetchLanguages() {
     const languagesSet = new Set<string>();
     data.forEach((country) => {
       Object.values(country.languages || {}).forEach((language) =>
-        languagesSet.add(language)
+        languagesSet.add(language as string)
       );
     });
     return Array.from(languagesSet).map((language) => ({

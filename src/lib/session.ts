@@ -9,7 +9,7 @@ interface Session {
 }
 
 export const session = async ({ session, token }: Session) => {
-  session.user.id = token.id;
+  session.user.id = token.id as string;
   return session;
 };
 
