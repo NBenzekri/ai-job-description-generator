@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/command";
 
 import { cn } from "@/lib/utils";
+import { fetchLanguages } from "@/utils/fetchLanguages";
 import {
   Popover,
   PopoverContent,
@@ -68,29 +69,12 @@ export default function GenerateJobDescription() {
   });
 
   useEffect(() => {
-    const fetchLanguages = async () => {
-      const url = "https://restcountries.com/v3.1/all";
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const languagesSet = new Set<string>();
-        data.forEach((country) => {
-          Object.values(country.languages || {}).forEach((language) =>
-            languagesSet.add(language)
-          );
-        });
-        setLanguages(
-          Array.from(languagesSet).map((language) => ({
-            value: language,
-            label: language,
-          }))
-        );
-      } catch (error) {
-        console.error("Error:", error);
-      }
+    const loadLanguages = async () => {
+      const languages = await fetchLanguages();
+      setLanguages(languages);
     };
 
-    fetchLanguages();
+    loadLanguages();
   }, []);
 
   console.log("completion", completion, isLoading);

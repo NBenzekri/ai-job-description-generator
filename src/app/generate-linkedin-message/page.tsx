@@ -1,9 +1,17 @@
 "use client";
 
-import { useState, KeyboardEvent } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import { useCompletion } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Card,
   CardContent,
@@ -14,23 +22,59 @@ import {
 } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import { X, Check, ChevronsUpDown, Copy } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+
+import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { fetchLanguages } from "@/utils/fetchLanguages";
 
 export default function GenerateLinkedInMessage() {
-  const [candidateName, setCandidateName] = useState("");
-  const [skills, setSkills] = useState<string[]>([]);
+  const [candidateName, setCandidateName] = useState("John Doe");
+  const [skills, setSkills] = useState<string[]>([
+    "JavaScript",
+    "React",
+    "Node.js",
+  ]);
   const [newSkill, setNewSkill] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [companyName, setCompanyName] = useState("");
+  const [jobTitle, setJobTitle] = useState("Software Engineer");
+  const [companyName, setCompanyName] = useState("Tech Corp");
+  const [outputLanguage, setOutputLanguage] = useState("");
+  const [languages, setLanguages] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [open, setOpen] = useState(false);
 
   const { complete, completion, isLoading } = useCompletion({
     api: "/api/generate-linkedin-message",
   });
 
+  useEffect(() => {
+    const loadLanguages = async () => {
+      const languages = await fetchLanguages();
+      setLanguages(languages);
+    };
+
+    loadLanguages();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const prompt = `Generate a LinkedIn outreach message to ${candidateName} for a ${jobTitle} position at ${companyName}. 
-    The candidate's skills include: ${skills.join(", ")}.`;
+    The candidate's skills include: ${skills.join(", ")}.
+    Output language: ${outputLanguage}.`;
 
     await complete(prompt);
   };
@@ -116,9 +160,62 @@ export default function GenerateLinkedInMessage() {
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
               />
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Generating..." : "Generate LinkedIn Message"}
-              </Button>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="w-full md:w-[300px] justify-between"
+                  >
+                    {outputLanguage
+                      ? languages.find(
+                          (language) => language.value === outputLanguage
+                        )?.label
+                      : "Select the output language..."}
+                    <ChevronsUpDown className="opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full md:w-[300px] p-0">
+                  <Command>
+                    <CommandInput placeholder="Search language..." />
+                    <CommandList>
+                      <CommandEmpty>No language found.</CommandEmpty>
+                      <CommandGroup>
+                        {languages.map((language) => (
+                          <CommandItem
+                            key={language.value}
+                            value={language.value}
+                            onSelect={(currentValue) => {
+                              setOutputLanguage(
+                                currentValue === outputLanguage
+                                  ? ""
+                                  : currentValue
+                              );
+                              setOpen(false);
+                            }}
+                          >
+                            {language.label}
+                            <Check
+                              className={cn(
+                                "ml-auto",
+                                outputLanguage === language.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <div className="pt-4">
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? "Generating..." : "Generate LinkedIn Message"}
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>
@@ -130,13 +227,17 @@ export default function GenerateLinkedInMessage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="bg-muted p-4 rounded-md min-h-[300px]">
-              {completion}
+            <div className="relative bg-muted p-4 rounded-md min-h-[300px]">
+              <Button
+                variant="ghost"
+                className="absolute top-2 right-2"
+                onClick={handleCopy}
+              >
+                <Copy className="w-5 h-5" />
+              </Button>
+              <ReactMarkdown>{completion}</ReactMarkdown>
             </div>
           </CardContent>
-          <CardFooter>
-            <Button onClick={handleCopy}>Copy to Clipboard</Button>
-          </CardFooter>
         </Card>
       </div>
     </div>

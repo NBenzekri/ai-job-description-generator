@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Job Description Generator
+
+This project includes AI-powered generation of LinkedIn messages and job descriptions using OpenAI's GPT models.
 
 ## Getting Started
 
@@ -16,21 +18,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## AI Generator
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### LinkedIn Message Generator
 
-## Learn More
+The LinkedIn message generator creates professional outreach messages. It uses the `gpt-3.5-turbo` model and is accessible via the `/generate-linkedin-message` API route.
 
-To learn more about Next.js, take a look at the following resources:
+### Job Description Generator
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The job description generator creates detailed job descriptions. It uses the `gpt-4-turbo` model and is accessible via the `/generate-job-description` API route.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Environment Variables
 
-## Deploy on Vercel
+To control the AI generation, the following environment variables are used:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `OPENAI_API_KEY`: Your OpenAI API key.
+- `BLOCK_GENERATIONS`: Set to `true` to block AI generation requests.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Blocking Generations
+
+You can block all AI generation requests by setting the `BLOCK_GENERATIONS` environment variable to `true`. This will return a 403 response for any generation requests.

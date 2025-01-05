@@ -6,14 +6,15 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  if (process.env.BLOCK_GENERATIONS === "true") {
+  if (process.env.BLOCK_GENERATIONS === "true" || !process.env.OPENAI_MODEL) {
     return new Response("Generations are currently blocked.", { status: 403 });
   }
 
   const { prompt } = await req.json();
 
   const result = await streamText({
-    model: openai("gpt-4-turbo"),
+    model: openai(process.env.OPENAI_MODEL),
+    maxTokens: parseInt(process.env.MAX_TOKENS) || 512,
     system: `You are a professional HR assistant specialized in creating job descriptions. 
     Reply only with the job description in the specified language. 
     If no language is specified, reply in English.
