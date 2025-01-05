@@ -87,8 +87,10 @@ export default function GenerateJobDescription() {
     Experience level: ${experienceLevel}. 
     Key responsibilities: ${responsibilities}. 
     Output language: ${outputLanguage}.
+    provide potential career path suggestions for this role.
     At the end of the job description, add a summary of the job description and future opportunities.
-    Please provide a structured and well-formatted description with icons and formal language.`;
+    Please provide a structured and well-formatted description with icons and formal language.
+    Leave a line break between paragraphs for better readability.`;
 
     await complete(prompt);
   };

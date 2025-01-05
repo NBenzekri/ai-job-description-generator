@@ -22,7 +22,6 @@ export async function POST(req: Request) {
     system: `You are a professional HR assistant specialized in creating job descriptions. 
     Reply only with the job description in the specified language. 
     If no language is specified, reply in English.
-    Leave a line break between paragraphs for better readability.
     Do not include any other phrases as intro or conclusion.`,
     prompt,
   });
