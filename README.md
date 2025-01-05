@@ -2,6 +2,10 @@
 
 This project includes AI-powered generation of LinkedIn messages and job descriptions using OpenAI's GPT models.
 
+## Live Demo
+
+You can access the live demo of the AI Job Description Generator at [AI Job Description Generator](https://ai-job-description-generator.vercel.app).
+
 ## Getting Started
 
 First, run the development server:
@@ -20,13 +24,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## AI Generator
 
-### LinkedIn Message Generator
-
-The LinkedIn message generator creates professional outreach messages. It uses the `gpt-3.5-turbo` model and is accessible via the `/generate-linkedin-message` API route.
-
 ### Job Description Generator
 
-The job description generator creates detailed job descriptions. It uses the `gpt-4-turbo` model and is accessible via the `/generate-job-description` API route.
+The job description generator creates detailed job descriptions and is accessible via the `/generate-job-description` API route.
+
+### LinkedIn Message Generator
+
+The LinkedIn message generator creates professional outreach messages and is accessible via the `/generate-linkedin-message` API route.
 
 ### Environment Variables
 
