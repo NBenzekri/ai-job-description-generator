@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         alt: "AI Job Description Generator",
       },
     ],
-    site_name: "AI Job Description Generator",
+    siteName: "AI Job Description Generator",
   },
   twitter: {
     card: "summary_large_image",
