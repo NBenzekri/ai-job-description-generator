@@ -1,8 +1,12 @@
+interface Country {
+  languages?: { [key: string]: string };
+}
+
 export async function fetchLanguages() {
   const url = "https://restcountries.com/v3.1/all";
   try {
     const response = await fetch(url);
-    const data = await response.json();
+    const data: Country[] = await response.json();
     const languagesSet = new Set<string>();
     data.forEach((country) => {
       Object.values(country.languages || {}).forEach((language) =>
