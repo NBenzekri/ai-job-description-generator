@@ -39,6 +39,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import removeMarkdown from "remove-markdown";
 
 export default function GenerateJobDescription() {
   const [jobTitle, setJobTitle] = useState("Full Stack Java React Developer");
@@ -96,7 +97,8 @@ export default function GenerateJobDescription() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(completion);
+    const plainText = removeMarkdown(completion);
+    navigator.clipboard.writeText(plainText);
     toast({
       title: "Copied to clipboard",
       description: "The job description has been copied to your clipboard.",

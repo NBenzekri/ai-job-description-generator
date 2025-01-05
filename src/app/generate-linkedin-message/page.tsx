@@ -31,6 +31,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { fetchLanguages } from "@/utils/fetchLanguages";
+import removeMarkdown from "remove-markdown";
 
 export default function GenerateLinkedInMessage() {
   const [candidateName, setCandidateName] = useState("John Doe");
@@ -71,7 +72,8 @@ export default function GenerateLinkedInMessage() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(completion);
+    const plainText = removeMarkdown(completion);
+    navigator.clipboard.writeText(plainText);
     toast({
       title: "Copied to clipboard",
       description: "The LinkedIn message has been copied to your clipboard.",
