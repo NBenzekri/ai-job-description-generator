@@ -1,20 +1,27 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface ThemeProviderProps {
   attribute: string;
   defaultTheme: string;
-  enableSystem: boolean;
-  disableTransitionOnChange: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const ThemeContext = createContext<any>(null);
+interface ThemeContextType {
+  theme: string;
+  toggleTheme: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({
   attribute,
   defaultTheme,
-  enableSystem,
-  disableTransitionOnChange,
   children,
 }: ThemeProviderProps) => {
   const [theme, setTheme] = useState(defaultTheme);
@@ -35,4 +42,10 @@ export const ThemeProvider = ({
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};

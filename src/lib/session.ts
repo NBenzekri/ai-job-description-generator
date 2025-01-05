@@ -1,11 +1,19 @@
 import { User, getServerSession } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
-export const session = async ({ session, token }: any) => {
+interface Session {
+  session: {
+    user: User;
+  };
+  token: JWT;
+}
+
+export const session = async ({ session, token }: Session) => {
   session.user.id = token.id;
   return session;
 };
 
-export const getUserSession = async (): Promise<User> => {
+export const getUserSession = async (): Promise<User | undefined> => {
   const authUserSession = await getServerSession({
     callbacks: {
       session,
