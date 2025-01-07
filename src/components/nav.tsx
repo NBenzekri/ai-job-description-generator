@@ -116,7 +116,7 @@ export function Nav() {
           >
             LinkedIn Messages
           </Link>
-          {session && (
+          {session ? (
             <>
               <Link
                 href="/dashboard"
@@ -134,6 +134,14 @@ export function Nav() {
                 Sign Out
               </Button>
             </>
+          ) : (
+            <Button
+              onClick={handleSignInOut}
+              variant="outline"
+              className="w-full"
+            >
+              Sign In
+            </Button>
           )}
         </div>
       )}
