@@ -1,5 +1,3 @@
-// "use client";
-
 import "./globals.css";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -10,19 +8,19 @@ import { Nav } from "@/components/nav";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Footer } from "@/components/footer";
-
+import { TooltipProvider } from "@/components/ui/tooltip";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Job Description Generator",
+  title: "Free AI Job Description Generator",
   description:
-    "Generate professional job descriptions and outreach messages with AI",
+    "Generate professional job descriptions and outreach messages with AI for Free",
   keywords:
-    "AI, job description, LinkedIn message, OpenAI, GPT, HR, recruitment",
+    "AI, job description, LinkedIn message, OpenAI, GPT, HR, recruitment, Free AI Job Description Generator, Free",
   openGraph: {
-    title: "AI Job Description Generator",
+    title: "Free AI Job Description Generator",
     description:
-      "Generate professional job descriptions and outreach messages with AI",
+      "Generate professional job descriptions and outreach messages with AI for Free",
     url: "https://ai-job-description-generator.vercel.app",
     images: [
       {
@@ -36,9 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Job Description Generator",
+    title: "Free AI Job Description Generator",
     description:
-      "Generate professional job descriptions and outreach messages with AI",
+      "Generate professional job descriptions and outreach messages with AI for Free",
     images: [
       {
         url: "/jobhunt.svg",
@@ -63,14 +61,16 @@ export default function RootLayout({
             // enableSystem={false}
             // disableTransitionOnChange
           >
-            <AuthProvider>
-              <Nav />
-              {children}
-              <Footer />
-              <Toaster />
-              <SpeedInsights />
-              <Analytics />
-            </AuthProvider>
+            <TooltipProvider>
+              <AuthProvider>
+                <Nav />
+                {children}
+                <Footer />
+                <Toaster />
+                <SpeedInsights />
+                <Analytics />
+              </AuthProvider>
+            </TooltipProvider>
           </ThemeProvider>
         </div>
       </body>

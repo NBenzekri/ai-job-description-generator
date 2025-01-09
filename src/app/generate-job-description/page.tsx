@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
-import { X, Check, ChevronsUpDown, Copy } from "lucide-react";
+import { X, Check, ChevronsUpDown, Copy, HelpCircle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import {
   Command,
@@ -40,6 +40,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import removeMarkdown from "remove-markdown";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function GenerateJobDescription() {
   const [jobTitle, setJobTitle] = useState("Full Stack Java React Developer");
@@ -125,7 +130,23 @@ export default function GenerateJobDescription() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">AI Job Description Generator</h1>
+      <h1 className="text-3xl font-bold mb-4 flex items-center">
+        AI Job Description Generator
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" className="ml-2">
+              <HelpCircle className="w-5 h-5" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="bg-gray-600 text-white p-2 rounded-md shadow-lg max-w-xs">
+            <p className="text-sm">
+              Fill in the details to generate a job description. Provide as much
+              information as possible for the best results. Click &quot;Generate
+              Job Description&quot; to see the AI-generated description.
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>

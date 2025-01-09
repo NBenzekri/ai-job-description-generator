@@ -24,7 +24,7 @@ export default function Home() {
             <div className="flex flex-col justify-center space-y-4 text-center lg:text-left">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  AI-Powered Job Description Generator
+                  Free AI-Powered Job Description Generator
                 </h1>
                 <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
                   Create professional job descriptions and outreach messages in
@@ -34,7 +34,7 @@ export default function Home() {
               <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center lg:justify-start">
                 <Link href="/generate-job-description">
                   <Button className="bg-blue-600 hover:bg-blue-700">
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                    Try it now <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
                 <Link href="#features">
