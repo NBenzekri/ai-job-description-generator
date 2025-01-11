@@ -23,6 +23,12 @@ export function Footer() {
             >
               Privacy Policy
             </Link>
+            <Link
+              className="text-sm hover:underline underline-offset-4"
+              href="/contact"
+            >
+              Contact
+            </Link>
           </nav>
         </div>
         <div className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">

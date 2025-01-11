@@ -51,6 +51,9 @@ export function Nav() {
           >
             LinkedIn Messages
           </Link>
+          <Link href="/contact" className="text-gray-600 hover:text-blue-600">
+            Contact
+          </Link>
           {session ? (
             <div className="relative">
               <Button
@@ -115,6 +118,13 @@ export function Nav() {
             onClick={closeMobileMenu}
           >
             LinkedIn Messages
+          </Link>
+          <Link
+            href="/contact"
+            className="block text-gray-600 hover:text-blue-600"
+            onClick={closeMobileMenu}
+          >
+            Contact
           </Link>
           {session ? (
             <>
