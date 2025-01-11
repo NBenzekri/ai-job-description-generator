@@ -12,7 +12,7 @@ const MAILGUN_ENDPOINT = process.env.MAILGUN_ENDPOINT!;
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
   username: "api",
-  key: MAILGUN_API_KEY,
+  key: MAILGUN_API_KEY || "key-not-found",
   url: `https://${MAILGUN_ENDPOINT}`,
 });
 
