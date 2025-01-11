@@ -9,10 +9,14 @@ const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN!;
 const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY!;
 const MAILGUN_ENDPOINT = process.env.MAILGUN_ENDPOINT!;
 
+if (!MAILGUN_API_KEY || !MAILGUN_ENDPOINT) {
+  throw new Error("Mailgun API key and endpoint must be defined");
+}
+
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
   username: "api",
-  key: MAILGUN_API_KEY || "key-not-found",
+  key: MAILGUN_API_KEY,
   url: `https://${MAILGUN_ENDPOINT}`,
 });
 
@@ -21,7 +25,7 @@ export async function POST(request: Request) {
     const { name, email, message } = await request.json();
 
     const data = {
-      from: `<${FROM_EMAIL}>`,
+      from: `Contact page <${FROM_EMAIL}>`,
       to: [TO_EMAIL],
       subject: `${WEBSITE_NAME} - New contact form ${name}`,
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}\n\nSent from ${WEBSITE_NAME}`,
